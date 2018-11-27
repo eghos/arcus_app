@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mysql:
+    image: 'mysql:latest'
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3001:80'
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - MYSQLUSER=postgres
+      - MYSQLHOST=postgres
+      - MYSQLDATABASE=postgres
+      - MYSQLPASSWORD=postgres_password
+      - MYSQLPORT=3306

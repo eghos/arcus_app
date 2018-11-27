@@ -7,7 +7,12 @@ var app = express();
 var path = require('path');
 var mysql = require('mysql');
 var connection  = require('express-myconnection');
-
+//app.use(express.methodOverride());
+//app.use(express.static(path.join(__dirname, 'public')));
+// development only
+//if ('development' == app.get('env')) {
+  //app.use(express.errorHandler());
+//}
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'static')));
@@ -60,7 +65,19 @@ app.post('/postaction', function(req, res) {
   res.send('Thanks for submitting data about your ' + req.body.family + ' project.');
 
 var formData = [[req.body.family,req.body.product,req.body.experience,req.body.client,req.body.contact]];
+//var dbData = [];
 
+
+//var myArray = ['1','2',3,4]
+
+//myArray.forEach(function(value){
+//  console.log(value);
+//});
+
+//formData.forEach(function(value){
+//   dbData.push([value]);
+
+//var message = [req.body.name,req.body.email,req.body.message];
 console.log(formData);
 
   //});
@@ -88,10 +105,72 @@ app.get('/', function(req, res) {
 //var searchData = [[req.query]];
 console.log(req.query.search);
 
+//var searchData = req.query.search;
+//console.log(searchData);
+//console.log(req.query);
+//console.log(searchData);
+
+//connection.query('CREATE TABLE IF NOT EXISTS arcus (family varchar(250) DEFAULT NULL, product varchar(320) DEFAULT NULL, experience varchar(65532) DEFAULT NULL,client varchar(320) DEFAULT NULL,contact varchar(320) DEFAULT NULL );')
+//var query = connection.query('SELECT * FROM  “forms” WHERE email LIKE ‘%searchData%’ ?') , function(req,res,rows) {
+//  if(err) {
+//    res.send('Error');
+//    }
+// else {
+//    res.send('Success');
+
+//exports.list = function(req, res){
+//var render = function(res,req){
+//var queryString = 'SELECT * FROM arcus';
+//connection.query(queryString, function(err,rows,fields){
+       //if(err)
+//       for (var i in rows) {
+//       console.log('Family: ', rows[i].family);
+//     }
+        // console.log("Error Selecting : %s ",err );
+       //res.render('search',{data:rows});
+//    });
+
+//  };
+
+//var queryString = "SELECT * FROM arcus WHERE family LIKE 'searchData'";
+
+//"SELECT * FROM arcus WHERE family like  'flightNo'",
+
+    // var queryString = 'SELECT * FROM arcus';
+
     connection.query("SELECT * FROM arcus WHERE family  like '%" + req.query.search + "%'", function(err, rows, fields) {
+//connection.query("SELECT * FROM arcus WHERE family LIKE '"+ connection.escape(searchData) +"'", function(err, rows, fields) {
+    // connection.query('SELECT * FROM arcus WHERE family LIKE 'searchData', function(err, rows, fields) {
+
          res.render('search',{data:rows});
 
      });
 
+    // " like '%" + req.params.search + "%'"
+
+//'" + connection.escape(searchData) + "'
+
+
+//});
+ //req.getConnection(function(err,connection){
+//var query = connection.query('SELECT * FROM arcus',function(err,rows){
+//       if(err)
+//         console.log("Error Selecting : %s ",err );
+
+//       res.render('search',{page_title:"Project Data",data:rows});
+//     });
+// });
+//};
+//  }
+//};
 
 });
+
+
+
+//app.post('/', function(req, res){
+//   console.log(req.body);
+//   res.send("received your request!");
+//});
+
+//app.listen(3000);

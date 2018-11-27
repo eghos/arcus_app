@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "start": "node index.js",
+    "start": "node index.js"
     "build": "arcus-scripts build",
     "eject": "arcus-scripts eject"
 
