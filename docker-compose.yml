@@ -1,0 +1,40 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-arcus 
+    restart: always
+    environment:
+       MYSQL_ROOT_PASSWORD: Nodeproject1$$
+       MYSQL_DATABASE: node_project
+       MYSQL_USER: node1
+       MYSQL_PASSWORD: Nodeproject1$$
+    volumes:
+       - mysql_data:/var/lib/mysql
+
+  arcus:
+    depends_on:
+       - mysql
+    container_name: arcus
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    ports:
+       - "3001:3001"
+    volumes:
+      - /app/node_modules
+      - ./arcus:/app
+    links:
+      - mysql:mysql
+    environment:
+      - MYSQL_USER=node1
+      - MYSQL_HOST=mysql-arcus
+      - MYSQL_DATABASE=node_project
+      - MYSQL_PASSWORD=Nodeproject1$$
+      - MYSQL_PORT=3306
+
+volumes:
+    mysql_data:
+
+
+
