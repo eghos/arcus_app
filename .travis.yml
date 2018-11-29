@@ -6,7 +6,6 @@ services:
 before_install:
   - docker build -t aeghobor/arcus -f Dockerfile.dev .
 
-
 deploy:
   provider: elasticbeanstalk
   region: "eu-west-1"
@@ -14,8 +13,7 @@ deploy:
   env: "Arcus-env"
   bucket_name: "elasticbeanstalk-eu-west-1-336209744632"
   bucket_path: "arcus"
- 
- on:
+  on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key:
